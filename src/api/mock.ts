@@ -19,7 +19,7 @@ const chats: Chat[] = [
 const messagesByChat: Record<string, Message[]> = {
   '1': [
     { id: 'm1', role: 'user', text: 'Какие у меня завтра пары?' },
-    { id: 'm2', role: 'assistant', text: 'Завтра етеб пиздец' },
+    { id: 'm2', role: 'assistant', text: 'Завтра тебе пиздец' },
   ],
   '2': [
     { id: 'm1', role: 'user', text: 'Напиши преподавателю по физике, что я заболел' },
