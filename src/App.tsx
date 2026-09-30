@@ -1,0 +1,51 @@
+import { useEffect, useState } from 'react';
+import { getHistory, getMessages, type Chat, type Message } from './api/mock';
+import './App.css';
+
+function App() {
+  const [chats, setChats] = useState<Chat[]>([]);
+  const [activeChatId, setActiveChatId] = useState<string>('1');
+  const [messages, setMessages] = useState<Message[]>([]);
+
+  useEffect(() => {
+    getHistory().then(setChats);
+  }, []);
+
+  useEffect(() => {
+    getMessages(activeChatId).then(setMessages);
+  }, [activeChatId]);
+
+  return (
+    <div className="layout">
+      <aside className="sidebar">
+        <h2>Чаты</h2>
+        {chats.map((chat) => (
+          <button
+            key={chat.id}
+            className={chat.id === activeChatId ? 'chat-item active' : 'chat-item'}
+            onClick={() => setActiveChatId(chat.id)}
+          >
+            <b>{chat.title}</b>
+            <small>{chat.updatedAt}</small>
+          </button>
+        ))}
+      </aside>
+
+      <main className="chat">
+        <header className="chat-header">
+          <b>{chats.find((c) => c.id === activeChatId)?.title ?? 'Чат'}</b>
+        </header>
+
+        <div className="messages">
+          {messages.map((m) => (
+            <div key={m.id} className={m.role === 'user' ? 'bubble user' : 'bubble assistant'}>
+              {m.text}
+            </div>
+          ))}
+        </div>
+      </main>
+    </div>
+  );
+}
+
+export default App;
