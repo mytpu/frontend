@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react';
-import { getHistory, getMessages, type Chat, type Message } from '../api/mock';
+import { getHistory, getMessages } from '../api/mockChat';
+import type { Chat, Message } from '../api/types';
 import './ChatPage.css';
 
 export default function ChatPage() {
