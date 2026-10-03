@@ -14,6 +14,7 @@ function greeting(now: Date): string {
 
 export default function HomePage() {
   const [summary, setSummary] = useState<HomeSummary | null>(null);
+  const [now] = useState(() => new Date());
 
   useEffect(() => {
     getHomeSummary().then(setSummary);
@@ -29,7 +30,7 @@ export default function HomePage() {
               : 'Загрузка…'}
           </div>
           <h1 className="home__title">
-            {greeting(new Date())}
+            {greeting(now)}
             {summary ? `, ${summary.studentName}` : ''}
           </h1>
         </div>

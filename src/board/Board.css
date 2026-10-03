@@ -25,7 +25,7 @@
   place-items: center;
   border: 2px dashed var(--color-line);
   border-radius: var(--radius-md);
-  color: var(--color-muted-2);
+  color: var(--color-ink-2);
   font-weight: 600;
   font-size: 13px;
 }

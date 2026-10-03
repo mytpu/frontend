@@ -25,10 +25,10 @@ const delay = (ms: number) => new Promise<void>((r) => setTimeout(r, ms));
 
 export async function getHistory(): Promise<Chat[]> {
   await delay(150);
-  return CHATS;
+  return structuredClone(CHATS);
 }
 
 export async function getMessages(chatId: string): Promise<Message[]> {
   await delay(150);
-  return MESSAGES[chatId] ?? [];
+  return structuredClone(MESSAGES[chatId] ?? []);
 }
