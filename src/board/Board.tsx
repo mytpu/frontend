@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
-import { getHomeSummary } from '../api/mock';
-import type { HomeSummary } from '../api/types';
+import { getHomeSummary } from '@/api/mock';
+import type { HomeSummary } from '@/api/types';
 import { TodayWidget } from './widgets/TodayWidget';
 import type { WidgetConfig } from './types';
 import './Board.css';

@@ -1,4 +1,4 @@
-import type { Lesson } from '../../api/types';
+import type { Lesson } from '@/api/types';
 import './TodayWidget.css';
 
 interface TodayWidgetProps {

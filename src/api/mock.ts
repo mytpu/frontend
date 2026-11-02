@@ -45,5 +45,5 @@ const delay = (ms: number) => new Promise<void>((r) => setTimeout(r, ms));
 
 export async function getHomeSummary(): Promise<HomeSummary> {
   await delay(250);
-  return MOCK;
+  return structuredClone(MOCK);
 }
