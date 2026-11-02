@@ -1,0 +1,21 @@
+:root {
+  --tpu-green: #0E9243;
+  --tpu-green-light: #28BE46;
+  --tpu-green-soft: #E3F4EA;
+  --tpu-black: #1E1E1E;
+  --tpu-bg: #F3F5F6;
+  --tpu-line: #E7E9EA;
+  --tpu-grey: #B0B4B9;
+  --tpu-grey-2: #6B7178;
+  --warn: #E8870E;
+  --warn-soft: #FDF1E1;
+  --danger: #D93A3A;
+  --info: #2F6FDB;
+  --info-soft: #E6EEFB;
+
+  --page-bg: #F3F5F6;
+  --page-card: #FFFFFF;
+  --page-text: #1E1E1E;
+  --page-muted: #6B7178;
+  --page-line: #E7E9EA;
+}
