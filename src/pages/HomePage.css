@@ -1,0 +1,17 @@
+.home {
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+}
+
+.home__sub {
+  color: var(--color-muted-2);
+  font-size: 13px;
+}
+
+.home__title {
+  margin: 0;
+  font-size: 26px;
+  font-weight: 800;
+  color: var(--color-ink);
+}

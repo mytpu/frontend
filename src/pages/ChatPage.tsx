@@ -1,8 +1,8 @@
 import { useEffect, useState } from 'react';
-import { getHistory, getMessages, type Chat, type Message } from './api/mock';
-import './App.css';
+import { getHistory, getMessages, type Chat, type Message } from '../api/mock';
+import './ChatPage.css';
 
-function App() {
+export default function ChatPage() {
   const [chats, setChats] = useState<Chat[]>([]);
   const [activeChatId, setActiveChatId] = useState<string>('1');
   const [messages, setMessages] = useState<Message[]>([]);
@@ -38,7 +38,10 @@ function App() {
 
         <div className="messages">
           {messages.map((m) => (
-            <div key={m.id} className={m.role === 'user' ? 'bubble user' : 'bubble assistant'}>
+            <div
+              key={m.id}
+              className={m.role === 'user' ? 'bubble user' : 'bubble assistant'}
+            >
               {m.text}
             </div>
           ))}
@@ -47,5 +50,3 @@ function App() {
     </div>
   );
 }
-
-export default App;
