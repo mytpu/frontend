@@ -1,14 +1,21 @@
-import { useState } from 'react';
-import { Layout, type NavKey } from './Layout';
-import HomePage from '../pages/HomePage';
-import ChatPage from '../pages/ChatPage';
+import { BrowserRouter, Navigate, Route, Routes } from 'react-router-dom';
+import { ThemeProvider } from '@/shared/theme/ThemeProvider';
+import { AppShell } from './AppShell';
+import HomePage from '@/pages/HomePage';
+import AssistantPage from '@/pages/AssistantPage';
 
 export default function App() {
-  const [page, setPage] = useState<NavKey>('home');
-
   return (
-    <Layout active={page} onNavigate={setPage}>
-      {page === 'home' ? <HomePage /> : <ChatPage />}
-    </Layout>
+    <ThemeProvider>
+      <BrowserRouter>
+        <Routes>
+          <Route element={<AppShell />}>
+            <Route index element={<HomePage />} />
+            <Route path="assistant" element={<AssistantPage />} />
+            <Route path="*" element={<Navigate to="/" replace />} />
+          </Route>
+        </Routes>
+      </BrowserRouter>
+    </ThemeProvider>
   );
 }
