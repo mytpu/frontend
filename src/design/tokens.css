@@ -1,0 +1,101 @@
+/* Токены выгружены из макета FigCraft (mytpu.figcraft), коллекции «ТПУ» и «Размеры».
+   В продукте две темы: светлая (по умолчанию) и графит. Режимы «Тёмная»/«Оригами» — в макете. */
+
+:root {
+  /* светлая */
+  --bg: #f3f5f6;
+  --surface: #ffffff;
+  --surface-2: #f3f5f6;
+  --chip-bg: #eef0f1;
+  --line: #e5e8ea;
+  --line-tile: #e4e8ea;
+  --ink: #1e1e1e;
+  --ink-2: #5f666d;
+  --ink-3: #8a9096;
+
+  --accent: #0b7a37;
+  --accent-strong: #0e9243;
+  --accent-bright: #28be46;
+  --accent-soft: #e3f4ea;
+  --on-accent: #ffffff;
+
+  --contrast: #1e1e1e;
+  --on-contrast: #ffffff;
+
+  --warn: #e8870e;
+  --warn-text: #9a5b00;
+  --warn-soft: #fdf1e1;
+  --info: #2f6fdb;
+  --info-text: #2457b5;
+  --info-soft: #e6eefb;
+  --danger: #b42323;
+  --danger-soft: #fdecec;
+
+  --now-bg: #0b7a37;
+  --now-line: #0b7a37;
+  --now-text: #d7f0df;
+  --now-title: #ffffff;
+
+  --shadow-1: 0 1px 2px rgba(16, 24, 20, 0.06), 0 2px 6px rgba(16, 24, 20, 0.04);
+  --shadow-2: 0 6px 16px rgba(16, 24, 20, 0.08);
+  --shadow-3: 0 14px 34px rgba(16, 24, 20, 0.14);
+
+  /* размеры */
+  --r-btn: 10px;
+  --r-tile: 12px;
+  --r-now: 14px;
+  --r-card: 16px;
+  --r-pill: 999px;
+  --space-1: 4px;
+  --space-2: 8px;
+  --space-3: 12px;
+  --space-4: 16px;
+  --space-5: 20px;
+  --space-6: 24px;
+  --space-8: 32px;
+  --h-btn: 40px;
+  --h-field: 40px;
+  --dur-fast: 120ms;
+  --dur-base: 200ms;
+  --dur-slow: 320ms;
+  --ease: cubic-bezier(0.2, 0.8, 0.2, 1);
+}
+
+:root[data-theme='graphite'] {
+  --bg: #0c0c0e;
+  --surface: #161618;
+  --surface-2: #1e1e21;
+  --chip-bg: #232327;
+  --line: #2a2a2e;
+  --line-tile: #2a2a2e;
+  --ink: #f4f4f5;
+  --ink-2: #a1a1aa;
+  --ink-3: #8b8b93;
+
+  --accent: #2fcb53;
+  --accent-strong: #2fcb53;
+  --accent-bright: #2fcb53;
+  --accent-soft: #17291d;
+  --on-accent: #0c0c0e;
+
+  --contrast: #f4f4f5;
+  --on-contrast: #0c0c0e;
+
+  --warn: #fbbf24;
+  --warn-text: #fbbf24;
+  --warn-soft: #2a2210;
+  --info: #93b4ff;
+  --info-text: #93b4ff;
+  --info-soft: #1a2236;
+  --danger: #f87171;
+  --danger-soft: #2e1517;
+
+  --now-bg: #17291d;
+  --now-line: #1f5a2f;
+  --now-text: #9be8ae;
+  --now-title: #f4f4f5;
+
+  --shadow-1: 0 1px 2px rgba(0, 0, 0, 0.5);
+  --shadow-2: 0 6px 16px rgba(0, 0, 0, 0.55);
+  --shadow-3: 0 14px 34px rgba(0, 0, 0, 0.6);
+}

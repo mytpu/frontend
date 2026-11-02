@@ -1,11 +1,16 @@
-import { StrictMode } from 'react'
-import { createRoot } from 'react-dom/client'
-import '@/shared/theme/tokens.css';
-import './index.css';
-import App from './app/App';
+import { StrictMode } from 'react';
+import { createRoot } from 'react-dom/client';
 
-createRoot(document.getElementById('root')!).render(
+import { App } from '@/app/App';
+
+import '@/design/tokens.css';
+import '@/design/base.css';
+
+const root = document.getElementById('root');
+if (!root) throw new Error('Не найден #root в index.html');
+
+createRoot(root).render(
   <StrictMode>
     <App />
   </StrictMode>,
-)
+);

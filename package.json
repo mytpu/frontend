@@ -1,12 +1,14 @@
 {
   "name": "mytpu-frontend",
   "private": true,
-  "version": "0.0.0",
+  "version": "0.1.0",
   "type": "module",
   "scripts": {
     "dev": "vite",
     "build": "tsc -b && vite build",
     "lint": "oxlint",
+    "test": "node tests/sse.test.ts",
+    "stub": "node tools/stub-assistant.mjs",
     "preview": "vite preview"
   },
   "dependencies": {
