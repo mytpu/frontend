@@ -1,0 +1,147 @@
+.card {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+  padding: var(--space-4) var(--space-5) var(--space-5);
+  background: var(--surface);
+  border: 1px solid var(--line-tile);
+  border-radius: var(--r-card);
+  box-shadow: var(--shadow-1);
+}
+
+.card__head {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: var(--space-3);
+}
+
+.card__title {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  font-size: 15px;
+  font-weight: 600;
+  letter-spacing: -0.01em;
+}
+
+.card__action {
+  padding: 0;
+  color: var(--ink-2);
+  font-size: 13px;
+  font-weight: 500;
+  transition: color var(--dur-fast) var(--ease);
+}
+
+.card__action:hover {
+  color: var(--accent);
+}
+
+.chip {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-1);
+  height: 22px;
+  padding: 0 9px;
+  border-radius: var(--r-pill);
+  font-size: 12px;
+  font-weight: 500;
+  white-space: nowrap;
+}
+
+.chip--ok {
+  background: var(--accent-soft);
+  color: var(--accent);
+}
+
+.chip--warn {
+  background: var(--warn-soft);
+  color: var(--warn-text);
+}
+
+.chip--info {
+  background: var(--info-soft);
+  color: var(--info-text);
+}
+
+.chip--neutral {
+  background: var(--chip-bg);
+  color: var(--ink-2);
+}
+
+/* «демо» — не статус, а предупреждение: данные не из API. Поэтому тише и в обводке. */
+.chip--demo {
+  height: 18px;
+  padding: 0 6px;
+  border: 1px solid var(--line);
+  background: none;
+  color: var(--ink-3);
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.02em;
+}
+
+.skeleton {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+  padding: var(--space-2) 0;
+}
+
+.skeleton__line {
+  height: 12px;
+  border-radius: var(--r-pill);
+  background: linear-gradient(90deg, var(--surface-2), var(--chip-bg), var(--surface-2));
+  background-size: 220% 100%;
+  animation: skeleton 1.2s var(--ease) infinite;
+}
+
+@keyframes skeleton {
+  from {
+    background-position: 120% 0;
+  }
+  to {
+    background-position: -20% 0;
+  }
+}
+
+/* ---------- ошибка сервиса ---------- */
+
+.state {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: var(--space-3);
+  padding: var(--space-4);
+  border: 1px solid var(--line);
+  border-radius: var(--r-tile);
+  background: var(--surface-2);
+}
+
+.state--compact {
+  align-items: stretch;
+  gap: var(--space-2);
+  padding: var(--space-3);
+}
+
+.state__text {
+  color: var(--ink-2);
+  font-size: 13px;
+}
+
+.state__retry {
+  align-self: flex-start;
+  padding: 0 var(--space-3);
+  height: 30px;
+  border: 1px solid var(--line-tile);
+  border-radius: var(--r-btn);
+  background: var(--surface);
+  color: var(--ink);
+  font-size: 12px;
+  font-weight: 600;
+}
+
+.state__retry:hover {
+  border-color: var(--accent-bright);
+  color: var(--accent);
+}

@@ -1,0 +1,89 @@
+/* Диалоги на нативном <dialog>. Скролл страницы под окном не блокируем через overflow/position:
+   ограничиваем прокрутку самого окна и фона (см. руководство «dialog»). */
+
+dialog {
+  padding: 0;
+  color: var(--ink);
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: var(--r-card);
+  box-shadow: var(--shadow-3);
+}
+
+dialog:modal {
+  overscroll-behavior: contain;
+}
+
+dialog::backdrop {
+  overflow: hidden;
+  overscroll-behavior: contain;
+  background: rgba(10, 20, 14, 0.42);
+}
+
+.dialog {
+  width: min(560px, calc(100vw - 32px));
+  max-height: min(720px, calc(100vh - 48px));
+  margin: auto;
+}
+
+.dialog--wide {
+  width: min(720px, calc(100vw - 32px));
+}
+
+/* шторка справа: уведомления */
+.dialog--side {
+  width: min(420px, 100vw);
+  height: 100vh;
+  max-height: 100vh;
+  margin: 0 0 0 auto;
+  border-radius: 0;
+  border-block: 0;
+  border-right: 0;
+}
+
+.dialog__head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-3);
+  padding: var(--space-4) var(--space-5);
+  border-bottom: 1px solid var(--line);
+}
+
+.dialog__title {
+  font-size: 16px;
+  font-weight: 600;
+  letter-spacing: -0.01em;
+}
+
+.dialog__close {
+  display: grid;
+  place-items: center;
+  width: 32px;
+  height: 32px;
+  border-radius: var(--r-btn);
+  color: var(--ink-2);
+  transition: background var(--dur-fast) var(--ease), color var(--dur-fast) var(--ease);
+}
+
+.dialog__close:hover {
+  background: var(--chip-bg);
+  color: var(--ink);
+}
+
+.dialog__body {
+  overflow-y: auto;
+  padding: var(--space-5);
+  max-height: calc(100vh - 140px);
+}
+
+.dialog--side .dialog__body {
+  max-height: calc(100vh - 72px);
+}
+
+@media (max-width: 640px) {
+  .dialog--side {
+    width: 100vw;
+    border-left: 0;
+  }
+}
