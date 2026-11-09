@@ -1,0 +1,240 @@
+/* Каркас: боковая колонка на сайте, нижние вкладки на телефоне. */
+
+.shell {
+  display: grid;
+  grid-template-columns: 248px minmax(0, 1fr);
+  min-height: 100%;
+}
+
+.skip-link {
+  position: absolute;
+  top: var(--space-2);
+  left: var(--space-2);
+  z-index: 20;
+  padding: var(--space-2) var(--space-3);
+  border-radius: var(--r-btn);
+  background: var(--contrast);
+  color: var(--on-contrast);
+  font-weight: 600;
+  transform: translateY(-200%);
+}
+
+.skip-link:focus-visible {
+  transform: none;
+}
+
+/* ---------- левая колонка ---------- */
+
+.rail {
+  position: sticky;
+  top: 0;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+  height: 100vh;
+  padding: var(--space-5) var(--space-4);
+  border-right: 1px solid var(--line);
+}
+
+.rail__logo {
+  padding: 0 var(--space-2) var(--space-2);
+}
+
+.rail__nav {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.nav-item {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  height: 38px;
+  padding: 0 var(--space-3);
+  border-radius: var(--r-btn);
+  color: var(--ink-2);
+  font-weight: 500;
+  transition: background var(--dur-fast) var(--ease), color var(--dur-fast) var(--ease);
+}
+
+.nav-item:hover {
+  background: var(--chip-bg);
+  color: var(--ink);
+}
+
+.nav-item--active {
+  background: var(--accent-soft);
+  color: var(--accent);
+  font-weight: 600;
+}
+
+.rail__search,
+.rail__theme {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  height: 38px;
+  padding: 0 var(--space-3);
+  border-radius: var(--r-btn);
+  color: var(--ink-2);
+  font-weight: 500;
+  text-align: left;
+  transition: background var(--dur-fast) var(--ease), color var(--dur-fast) var(--ease);
+}
+
+.rail__search:hover,
+.rail__theme:hover {
+  background: var(--chip-bg);
+  color: var(--ink);
+}
+
+.rail__search .kbd {
+  margin-left: auto;
+}
+
+.rail__spacer {
+  flex: 1;
+}
+
+.rail__me {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  padding: var(--space-2);
+  border-radius: var(--r-tile);
+  transition: background var(--dur-fast) var(--ease);
+}
+
+.rail__me:hover {
+  background: var(--chip-bg);
+}
+
+.rail__who {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+}
+
+.rail__name {
+  font-size: 13px;
+  font-weight: 600;
+}
+
+.rail__group {
+  color: var(--ink-3);
+  font-size: 12px;
+}
+
+.avatar {
+  display: grid;
+  place-items: center;
+  flex: none;
+  width: 34px;
+  height: 34px;
+  border-radius: var(--r-pill);
+  background: var(--contrast);
+  color: var(--on-contrast);
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.02em;
+}
+
+/* ---------- правая колонка ---------- */
+
+.shell__main {
+  min-width: 0;
+  padding: var(--space-6) var(--space-8) 140px;
+}
+
+.kbd {
+  padding: 2px 6px;
+  border: 1px solid var(--line);
+  border-radius: 6px;
+  background: var(--surface);
+  color: var(--ink-3);
+  font-family: inherit;
+  font-size: 11px;
+  font-weight: 600;
+}
+
+/* ---------- нижние вкладки на телефоне ---------- */
+
+.tabs {
+  display: none;
+}
+
+@media (max-width: 900px) {
+  .shell {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .rail {
+    position: static;
+    flex-direction: row;
+    align-items: center;
+    height: auto;
+    padding: var(--space-3) var(--space-4);
+    border-right: 0;
+    border-bottom: 1px solid var(--line);
+  }
+
+  .rail__nav,
+  .rail__spacer,
+  .rail__search,
+  .rail__theme span,
+  .rail__who {
+    display: none;
+  }
+
+  .rail__search {
+    display: flex;
+    margin-left: auto;
+    padding: 0 var(--space-2);
+  }
+
+  .rail__theme {
+    padding: 0 var(--space-2);
+  }
+
+  .rail__me {
+    padding: 0;
+  }
+
+  .rail__logo {
+    padding: 0;
+  }
+
+  .shell__main {
+    padding: var(--space-4) var(--space-4) calc(160px + env(safe-area-inset-bottom));
+  }
+
+  .tabs {
+    position: fixed;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    z-index: 10;
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    padding: var(--space-2) 0 calc(var(--space-2) + env(safe-area-inset-bottom));
+    border-top: 1px solid var(--line);
+    background: var(--surface);
+  }
+
+  .tab {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 2px;
+    padding: var(--space-1) 0;
+    color: var(--ink-3);
+    font-size: 11px;
+    font-weight: 500;
+  }
+
+  .tab--active {
+    color: var(--accent);
+    font-weight: 600;
+  }
+}

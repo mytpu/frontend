@@ -1,0 +1,64 @@
+/* Плавающая строка помощника. */
+
+.ask {
+  position: fixed;
+  bottom: var(--space-5);
+  left: calc(50% + 124px);
+  transform: translateX(-50%);
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  width: min(560px, calc(100vw - 60px));
+  padding: var(--space-2) var(--space-2) var(--space-2) var(--space-4);
+  background: var(--surface);
+  border: 1px solid var(--line-tile);
+  border-radius: var(--r-pill);
+  box-shadow: var(--shadow-2);
+}
+
+.ask:focus-within {
+  border-color: var(--accent-bright);
+}
+
+.ask__input {
+  flex: 1;
+  min-width: 0;
+  height: 32px;
+  border: 0;
+  outline: 0;
+  background: none;
+  color: var(--ink);
+  font-size: 13px;
+}
+
+.ask__input::placeholder {
+  color: var(--ink-3);
+}
+
+.ask__send {
+  display: grid;
+  place-items: center;
+  flex: none;
+  width: 34px;
+  height: 34px;
+  border-radius: var(--r-pill);
+  background: var(--contrast);
+  color: var(--on-contrast);
+}
+
+.ask__send:hover {
+  opacity: 0.88;
+}
+
+@media (max-width: 900px) {
+  .ask {
+    left: 50%;
+    bottom: calc(64px + env(safe-area-inset-bottom));
+    width: calc(100vw - 24px);
+    padding-left: var(--space-3);
+  }
+
+  .ask .kbd {
+    display: none;
+  }
+}

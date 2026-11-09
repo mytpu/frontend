@@ -1,8 +1,18 @@
+import { BrowserRouter, Route, Routes } from 'react-router-dom';
+
+import { HomePage } from '@/pages/HomePage';
+
+import { AppShell } from './AppShell';
+
 export function App() {
   return (
-    <main className="boot">
-      <h1>Мой ТПУ</h1>
-      <p>Каркас на месте, экраны в работе.</p>
-    </main>
+    <BrowserRouter>
+      <Routes>
+        <Route element={<AppShell />}>
+          <Route index element={<HomePage />} />
+          <Route path="*" element={<HomePage />} />
+        </Route>
+      </Routes>
+    </BrowserRouter>
   );
 }
