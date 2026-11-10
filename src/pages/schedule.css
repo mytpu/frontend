@@ -1,0 +1,182 @@
+/* Расписание: неделя сеткой, поиск через помощника. */
+
+.lookup {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: var(--space-5);
+  margin-bottom: var(--space-5);
+  padding: var(--space-4);
+  border: 1px solid var(--line-tile);
+  border-radius: var(--r-card);
+  background: var(--surface);
+}
+
+.lookup__title {
+  font-size: 14px;
+  font-weight: 600;
+}
+
+.lookup__hint {
+  margin-top: 2px;
+  max-width: 52ch;
+  color: var(--ink-2);
+  font-size: 12px;
+}
+
+.lookup__hint code {
+  padding: 1px 5px;
+  border-radius: 5px;
+  background: var(--chip-bg);
+  font-size: 11px;
+}
+
+.lookup__form {
+  display: flex;
+  flex: none;
+  gap: var(--space-2);
+}
+
+.lookup__input {
+  width: 220px;
+  height: var(--h-field);
+  padding: 0 var(--space-3);
+  border: 1px solid var(--line-tile);
+  border-radius: var(--r-btn);
+  background: var(--surface);
+  color: var(--ink);
+  font-size: 13px;
+}
+
+.lookup__input:focus-visible {
+  border-color: var(--accent-bright);
+}
+
+.week__head {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: var(--space-2);
+  margin-bottom: var(--space-3);
+}
+
+.week__title {
+  font-size: 15px;
+  font-weight: 600;
+}
+
+.week__note {
+  flex: 1 1 100%;
+  color: var(--ink-3);
+  font-size: 12px;
+}
+
+.week__grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(210px, 1fr));
+  gap: var(--space-3);
+}
+
+.day {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+  padding: var(--space-3);
+  border: 1px solid var(--line-tile);
+  border-radius: var(--r-tile);
+  background: var(--surface);
+}
+
+.day--today {
+  border-color: var(--accent-bright);
+  box-shadow: 0 0 0 3px var(--accent-soft);
+}
+
+.day__head {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: var(--space-2);
+  padding-bottom: var(--space-2);
+  border-bottom: 1px solid var(--line);
+}
+
+.day__weekday {
+  font-size: 13px;
+  font-weight: 600;
+  text-transform: capitalize;
+}
+
+.day__date {
+  color: var(--ink-3);
+  font-size: 12px;
+}
+
+.day--today .day__weekday {
+  color: var(--accent);
+}
+
+.day__empty {
+  padding: var(--space-2) 0;
+  color: var(--ink-3);
+  font-size: 12px;
+}
+
+.day__pairs {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+}
+
+.slot {
+  display: flex;
+  flex-direction: column;
+  gap: 1px;
+}
+
+.slot__time {
+  color: var(--ink-3);
+  font-size: 11px;
+  font-variant-numeric: tabular-nums;
+  font-weight: 600;
+}
+
+.slot__subject {
+  font-size: 13px;
+  font-weight: 500;
+}
+
+.slot__meta {
+  color: var(--ink-3);
+  font-size: 11px;
+}
+
+.week__foot {
+  margin-top: var(--space-4);
+  color: var(--ink-3);
+  font-size: 12px;
+}
+
+.week__link {
+  color: var(--accent);
+  font-weight: 600;
+  text-decoration: underline;
+  text-underline-offset: 2px;
+}
+
+@media (max-width: 900px) {
+  .lookup {
+    flex-direction: column;
+    align-items: stretch;
+    gap: var(--space-3);
+  }
+
+  .lookup__form {
+    flex: 1;
+  }
+
+  .lookup__input {
+    width: 100%;
+    flex: 1;
+  }
+}
