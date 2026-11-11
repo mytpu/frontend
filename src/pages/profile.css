@@ -1,0 +1,218 @@
+/* Профиль: карточка студента, выбор темы, приложения с доступом, сессия. */
+
+.me {
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr) minmax(0, 260px);
+  gap: var(--space-4);
+  align-items: start;
+  margin-bottom: var(--space-6);
+  padding: var(--space-5);
+  border: 1px solid var(--line-tile);
+  border-radius: var(--r-card);
+  background: var(--surface);
+  box-shadow: var(--shadow-1);
+}
+
+.me__avatar {
+  display: grid;
+  place-items: center;
+  width: 56px;
+  height: 56px;
+  border-radius: var(--r-pill);
+  background: var(--contrast);
+  color: var(--on-contrast);
+  font-size: 17px;
+  font-weight: 700;
+}
+
+.me__name {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  font-size: 18px;
+  font-weight: 600;
+  letter-spacing: -0.02em;
+}
+
+.me__meta {
+  color: var(--ink-2);
+  font-size: 13px;
+}
+
+.me__facts {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+  margin: 0;
+  padding-left: var(--space-4);
+  border-left: 1px solid var(--line);
+}
+
+.me__facts dt {
+  color: var(--ink-3);
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.03em;
+  text-transform: uppercase;
+}
+
+.me__facts dd {
+  margin: 0 0 var(--space-2);
+  font-size: 13px;
+}
+
+.section__note {
+  max-width: 70ch;
+  color: var(--ink-2);
+  font-size: 13px;
+}
+
+/* ---------- выбор темы ---------- */
+
+.theme-pick {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: var(--space-3);
+}
+
+.theme-card {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 2px;
+  padding: var(--space-3);
+  border: 1px solid var(--line-tile);
+  border-radius: var(--r-tile);
+  background: var(--surface);
+  text-align: left;
+}
+
+.theme-card--on {
+  border-color: var(--accent-bright);
+  box-shadow: 0 0 0 3px var(--accent-soft);
+}
+
+.theme-card__preview {
+  width: 100%;
+  height: 46px;
+  margin-bottom: var(--space-2);
+  border: 1px solid var(--line);
+  border-radius: var(--r-btn);
+}
+
+.theme-card__preview--light {
+  background: linear-gradient(135deg, #f3f5f6 0 55%, #ffffff 55% 100%);
+}
+
+.theme-card__preview--graphite {
+  background: linear-gradient(135deg, #0c0c0e 0 55%, #2fcb53 55% 100%);
+}
+
+.theme-card__name {
+  font-size: 14px;
+  font-weight: 600;
+}
+
+.theme-card__hint {
+  color: var(--ink-3);
+  font-size: 12px;
+}
+
+/* ---------- приложения с доступом ---------- */
+
+.apps {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-1);
+}
+
+.apps__row {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  padding: var(--space-3);
+  border: 1px solid var(--line-tile);
+  border-radius: var(--r-tile);
+  background: var(--surface);
+}
+
+.apps__icon {
+  display: grid;
+  place-items: center;
+  flex: none;
+  width: 30px;
+  height: 30px;
+  border-radius: var(--r-btn);
+  background: var(--chip-bg);
+  color: var(--ink-2);
+}
+
+.apps__body {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+  flex: 1;
+}
+
+.apps__title {
+  font-size: 13px;
+  font-weight: 600;
+}
+
+.apps__scope {
+  color: var(--ink-3);
+  font-size: 12px;
+}
+
+/* ---------- сессия ---------- */
+
+.session {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-4);
+  padding: var(--space-4);
+  border: 1px dashed var(--line);
+  border-radius: var(--r-tile);
+}
+
+.session__text {
+  max-width: 62ch;
+  color: var(--ink-2);
+  font-size: 13px;
+}
+
+.dialog-text {
+  color: var(--ink-2);
+  font-size: 13px;
+}
+
+.dialog-text + .dialog-text {
+  margin-top: var(--space-3);
+}
+
+.dialog-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: var(--space-2);
+  margin-top: var(--space-5);
+}
+
+@media (max-width: 900px) {
+  .me {
+    grid-template-columns: auto minmax(0, 1fr);
+  }
+
+  .me__facts {
+    grid-column: 1 / -1;
+    padding-left: 0;
+    border-left: 0;
+    border-top: 1px solid var(--line);
+    padding-top: var(--space-3);
+  }
+
+  .session {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+}
