@@ -1,7 +1,11 @@
+import { useState } from 'react';
+
 import { api, demoState } from '@/api/client';
 import { useAsync } from '@/shared/lib/useAsync';
+import { Icon } from '@/shared/ui/Icon';
 import { PageHeader } from '@/shared/ui/PageHeader';
 import { Board } from '@/board/Board';
+import { BoardConfigDialog } from '@/board/BoardConfigDialog';
 import { useBoard } from '@/board/boardStore';
 import { Skeleton } from '@/shared/ui/Card';
 
@@ -25,6 +29,7 @@ function greeting(hour: number): string {
 
 export function HomePage() {
   const board = useBoard();
+  const [configOpen, setConfigOpen] = useState(false);
   const student = useAsync(api.student);
 
   const me = student.state.status === 'ready' ? student.state.data : null;
@@ -33,7 +38,12 @@ export function HomePage() {
 
   return (
     <>
-      <PageHeader eyebrow={eyebrow} title={me ? `${greeting(NOW.getHours())}, ${me.firstName}` : 'Мой ТПУ'} />
+      <PageHeader eyebrow={eyebrow} title={me ? `${greeting(NOW.getHours())}, ${me.firstName}` : 'Мой ТПУ'}>
+        <button className="btn btn--outline" type="button" onClick={() => setConfigOpen(true)}>
+          <Icon name="settings" size={16} />
+          Настроить доску
+        </button>
+      </PageHeader>
 
       {DEMO_NOTICE[demoState] ? (
         <p className="home__demo">
@@ -52,10 +62,19 @@ export function HomePage() {
         ) : (
           <section className="home__blank">
             <h2 className="home__blank-title">На доске пусто</h2>
-            <p className="home__blank-text">Все виджеты скрыты. Включите нужные в настройке доски.</p>
+            <p className="home__blank-text">
+              Виджеты скрыты. Верните расписание и дедлайны — или соберите доску заново.
+            </p>
+            <div className="home__blank-actions">
+              <button className="btn btn--contrast" type="button" onClick={() => setConfigOpen(true)}>
+                Выбрать виджеты
+              </button>
+            </div>
           </section>
         )
       ) : null}
+
+      <BoardConfigDialog open={configOpen} onClose={() => setConfigOpen(false)} board={board} />
     </>
   );
 }
