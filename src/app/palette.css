@@ -1,0 +1,123 @@
+/* Палитра быстрого поиска: немодальный диалог в верхнем слое (popover).
+   position/inset приходится задавать явно — у popover в UA-стилях inset: 0 и margin: auto. */
+
+.palette {
+  position: fixed;
+  inset: 12vh auto auto 50%;
+  translate: -50% 0;
+  width: min(600px, calc(100vw - 32px));
+  padding: 0;
+  overflow: hidden;
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: var(--r-card);
+  box-shadow: var(--shadow-3);
+}
+
+.palette::backdrop {
+  background: rgba(10, 20, 14, 0.32);
+}
+
+.palette__form {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  padding: var(--space-3) var(--space-4);
+  border-bottom: 1px solid var(--line);
+  color: var(--ink-3);
+}
+
+.palette__input {
+  flex: 1;
+  height: 32px;
+  border: 0;
+  outline: 0;
+  background: none;
+  color: var(--ink);
+  font-size: 15px;
+}
+
+.palette__input::placeholder {
+  color: var(--ink-3);
+}
+
+.palette__list {
+  max-height: min(420px, 60vh);
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  padding: var(--space-2);
+}
+
+.palette__row {
+  display: flex;
+  flex-direction: column;
+}
+
+.palette__group {
+  display: block;
+  padding: var(--space-2) var(--space-3) var(--space-1);
+  color: var(--ink-3);
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+
+.palette__item {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  width: 100%;
+  padding: var(--space-2) var(--space-3);
+  border-radius: var(--r-btn);
+  color: var(--ink-2);
+  text-align: left;
+}
+
+.palette__item svg {
+  margin-left: auto;
+  opacity: 0;
+  transition: opacity var(--dur-fast) var(--ease);
+}
+
+.palette__item--active {
+  background: var(--accent-soft);
+  color: var(--ink);
+}
+
+.palette__item--active svg {
+  opacity: 1;
+  color: var(--accent);
+}
+
+.palette__title {
+  font-size: 14px;
+  font-weight: 500;
+}
+
+.palette__hint {
+  overflow: hidden;
+  color: var(--ink-3);
+  font-size: 12px;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.palette__empty {
+  padding: var(--space-5) var(--space-3);
+  color: var(--ink-2);
+  font-size: 13px;
+  text-align: center;
+}
+
+.palette__empty a {
+  color: var(--accent);
+  font-weight: 600;
+}
+
+@media (max-width: 640px) {
+  .palette {
+    inset: 8vh auto auto 50%;
+    width: calc(100vw - 16px);
+  }
+}

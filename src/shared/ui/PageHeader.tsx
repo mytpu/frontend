@@ -1,5 +1,8 @@
 import type { ReactNode } from 'react';
 
+import { useShell } from '@/app/shellContext';
+import { Icon } from '@/shared/ui/Icon';
+
 import './PageHeader.css';
 
 interface PageHeaderProps {
@@ -8,8 +11,11 @@ interface PageHeaderProps {
   children?: ReactNode;
 }
 
-/* Шапка экрана: надзаголовок, заголовок и действия страницы. */
+/* Шапка экрана: надзаголовок, заголовок, действия и вход в поиск.
+   Поиск — кнопка, а не поле: палитра одна на приложение и открывается из любого экрана. */
 export function PageHeader({ eyebrow, title, children }: PageHeaderProps) {
+  const { openPalette } = useShell();
+
   return (
     <header className="page-head">
       <div className="page-head__text">
@@ -17,7 +23,14 @@ export function PageHeader({ eyebrow, title, children }: PageHeaderProps) {
         <h1 className="page-head__title">{title}</h1>
       </div>
 
-      {children ? <div className="page-head__actions">{children}</div> : null}
+      <div className="page-head__actions">
+        {children}
+        <button className="search search--button" type="button" onClick={openPalette}>
+          <Icon name="search" size={18} />
+          <span className="search__label">Поиск по сервисам</span>
+          <kbd className="kbd">Ctrl K</kbd>
+        </button>
+      </div>
     </header>
   );
 }
