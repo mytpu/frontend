@@ -11,10 +11,10 @@ interface PageHeaderProps {
   children?: ReactNode;
 }
 
-/* Шапка экрана: надзаголовок, заголовок, действия и вход в поиск.
+/* Шапка экрана: надзаголовок, заголовок, действия, вход в поиск и шторка уведомлений.
    Поиск — кнопка, а не поле: палитра одна на приложение и открывается из любого экрана. */
 export function PageHeader({ eyebrow, title, children }: PageHeaderProps) {
-  const { openPalette } = useShell();
+  const { openPalette, openNotifications, unread } = useShell();
 
   return (
     <header className="page-head">
@@ -29,6 +29,15 @@ export function PageHeader({ eyebrow, title, children }: PageHeaderProps) {
           <Icon name="search" size={18} />
           <span className="search__label">Поиск по сервисам</span>
           <kbd className="kbd">Ctrl K</kbd>
+        </button>
+        <button
+          className="icon-button"
+          type="button"
+          onClick={openNotifications}
+          aria-label={unread ? `Уведомления: ${unread} новых` : 'Уведомления'}
+        >
+          <Icon name="bell" size={18} />
+          {unread ? <span className="icon-button__badge">{unread}</span> : null}
         </button>
       </div>
     </header>

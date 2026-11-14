@@ -10,6 +10,7 @@ import { Logo } from '@/shared/ui/Logo';
 import { AskBar } from './AskBar';
 import { CommandPalette } from './CommandPalette';
 import type { PaletteItem } from './CommandPalette';
+import { NotificationsDrawer } from './NotificationsDrawer';
 import { NAV } from './nav';
 import { ShellContext } from './shellContext';
 
@@ -17,8 +18,11 @@ import './AppShell.css';
 
 export function AppShell() {
   const [paletteOpen, setPaletteOpen] = useState(false);
+  const [drawerOpen, setDrawerOpen] = useState(false);
+  const [readIds, setReadIds] = useState<string[]>([]);
 
   const student = useAsync(api.student);
+  const notifications = useAsync(api.notifications);
   const services = useAsync(api.services);
   const actions = useAsync(api.quickActions);
   const { mode, toggle } = useTheme();
@@ -33,6 +37,11 @@ export function AppShell() {
     window.addEventListener('keydown', onKeyDown);
     return () => window.removeEventListener('keydown', onKeyDown);
   }, []);
+
+  const unread = useMemo(() => {
+    if (notifications.state.status !== 'ready') return null;
+    return notifications.state.data.filter((item) => item.unread && !readIds.includes(item.id)).length;
+  }, [notifications.state, readIds]);
 
   const paletteItems = useMemo<PaletteItem[]>(() => {
     const pages: PaletteItem[] = NAV.map((item) => ({
@@ -67,7 +76,15 @@ export function AppShell() {
     return [...pages, ...serviceItems, ...askItems];
   }, [services.state, actions.state]);
 
-  const shell = useMemo(() => ({ openPalette: () => setPaletteOpen(true) }), []);
+  const shell = useMemo(
+    () => ({
+      openPalette: () => setPaletteOpen(true),
+      openNotifications: () => setDrawerOpen(true),
+      unread,
+    }),
+    [unread],
+  );
+
   const me = student.state.status === 'ready' ? student.state.data : null;
 
   return (
@@ -127,6 +144,22 @@ export function AppShell() {
         <AskBar />
 
         <CommandPalette open={paletteOpen} onClose={() => setPaletteOpen(false)} items={paletteItems} />
+
+        <NotificationsDrawer
+          open={drawerOpen}
+          onClose={() => setDrawerOpen(false)}
+          items={notifications.state.status === 'ready' ? notifications.state.data : []}
+          readIds={readIds}
+          onReadAll={() =>
+            setReadIds(
+              notifications.state.status === 'ready'
+                ? notifications.state.data.map((item) => item.id)
+                : [],
+            )
+          }
+          loading={notifications.state.status === 'loading'}
+          error={notifications.state.status === 'error' ? notifications.state.message : null}
+        />
       </div>
     </ShellContext.Provider>
   );
