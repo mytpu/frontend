@@ -216,3 +216,8 @@
     align-items: flex-start;
   }
 }
+@media (max-width: 640px) {
+  .theme-pick {
+    grid-template-columns: minmax(0, 1fr);
+  }
+}

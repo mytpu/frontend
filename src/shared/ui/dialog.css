@@ -87,3 +87,9 @@ dialog::backdrop {
     border-left: 0;
   }
 }
+@media (max-width: 640px) {
+  .dialog {
+    width: calc(100vw - 24px);
+    max-width: none;
+  }
+}
