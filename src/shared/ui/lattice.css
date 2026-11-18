@@ -1,0 +1,48 @@
+/* LatticeLoader: сетка 3×3, зажигается по диагонали, без подсветки. */
+
+.lattice {
+  display: inline-flex;
+  flex: none;
+}
+
+.lattice__grid {
+  display: grid;
+  grid-template-columns: repeat(3, var(--lattice-cell, 5px));
+  gap: 2px;
+}
+
+.lattice__cell {
+  width: var(--lattice-cell, 5px);
+  height: var(--lattice-cell, 5px);
+  border-radius: 1px;
+  background: currentColor;
+  opacity: 0.18;
+  animation: lattice-pulse 1.1s ease-in-out infinite;
+}
+
+.lattice[data-status='done'] .lattice__cell {
+  opacity: 1;
+  animation: none;
+}
+
+.lattice[data-status='error'] .lattice__cell {
+  opacity: 0.55;
+  animation: none;
+}
+
+@keyframes lattice-pulse {
+  0%,
+  100% {
+    opacity: 0.18;
+  }
+  40% {
+    opacity: 0.9;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .lattice__cell {
+    animation: none;
+    opacity: 0.5;
+  }
+}

@@ -29,6 +29,7 @@ export interface BoardApi {
   toggle: (id: WidgetId) => void;
   setSize: (id: WidgetId, size: WidgetSize) => void;
   move: (id: WidgetId, direction: -1 | 1) => void;
+  reorder: (from: WidgetId, to: WidgetId) => void;
   reset: () => void;
 }
 
@@ -121,6 +122,18 @@ export function useBoard(): BoardApi {
     });
   }, []);
 
+  const reorder = useCallback((from: WidgetId, to: WidgetId) => {
+    setItems((current) => {
+      const source = current.findIndex((item) => item.id === from);
+      const target = current.findIndex((item) => item.id === to);
+      if (source === -1 || target === -1 || source === target) return current;
+      const next = [...current];
+      const [moved] = next.splice(source, 1);
+      next.splice(target, 0, moved);
+      return next;
+    });
+  }, []);
+
   const reset = useCallback(() => {
     setItems(DEFAULT_ITEMS);
   }, []);
@@ -134,7 +147,7 @@ export function useBoard(): BoardApi {
     [items],
   );
 
-  return { items, isCustom, toggle, setSize, move, reset };
+  return { items, isCustom, toggle, setSize, move, reorder, reset };
 }
 
 export function widgetMeta(id: WidgetId): WidgetMeta {

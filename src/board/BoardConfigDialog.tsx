@@ -83,10 +83,6 @@ export function BoardConfigDialog({ open, onClose, board }: BoardConfigDialogPro
         })}
       </ul>
 
-      <p className="cfg__hint">
-        Настройка хранится в этом браузере. Данные виджетов демонстрационные — они помечены чипом «демо».
-      </p>
-
       <div className="cfg__foot">
         <button className="btn btn--outline" type="button" onClick={board.reset} disabled={!board.isCustom}>
           Сбросить

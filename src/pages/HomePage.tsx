@@ -1,7 +1,8 @@
 import { useState } from 'react';
 
-import { api, demoState } from '@/api/client';
+import { api } from '@/api/client';
 import { useAsync } from '@/shared/lib/useAsync';
+import { Chip } from '@/shared/ui/Card';
 import { Icon } from '@/shared/ui/Icon';
 import { PageHeader } from '@/shared/ui/PageHeader';
 import { Board } from '@/board/Board';
@@ -11,10 +12,6 @@ import { Skeleton } from '@/shared/ui/Card';
 
 import './HomePage.css';
 
-const DEMO_NOTICE: Record<string, string> = {
-  'moodle-down': 'Демо-состояние: Moodle недоступен. Остальные виджеты живут — так и должно быть.',
-  empty: 'Демо-состояние: сервисы вернули пустые списки. Виджеты показывают пустоту, а не ошибку.',
-};
 
 /* Время одного визита: пересчитывать его на каждый рендер незачем. */
 const NOW = new Date();
@@ -39,17 +36,13 @@ export function HomePage() {
   return (
     <>
       <PageHeader eyebrow={eyebrow} title={me ? `${greeting(NOW.getHours())}, ${me.firstName}` : 'Мой ТПУ'}>
+        <Chip tone="demo">демо</Chip>
         <button className="btn btn--outline" type="button" onClick={() => setConfigOpen(true)}>
           <Icon name="settings" size={16} />
           Настроить доску
         </button>
       </PageHeader>
 
-      {DEMO_NOTICE[demoState] ? (
-        <p className="home__demo">
-          <span aria-hidden="true">●</span> {DEMO_NOTICE[demoState]}
-        </p>
-      ) : null}
 
       {student.state.status === 'loading' ? <Skeleton lines={3} /> : null}
       {student.state.status === 'error' ? (
@@ -58,7 +51,7 @@ export function HomePage() {
 
       {student.state.status === 'ready' ? (
         visible.length > 0 ? (
-          <Board items={board.items} />
+          <Board board={board} />
         ) : (
           <section className="home__blank">
             <h2 className="home__blank-title">На доске пусто</h2>

@@ -26,7 +26,6 @@ export function RequestsWidget({ size }: { size: WidgetSize }) {
       result={result}
       emptyText="Открытых заявок нет"
       isEmpty={(data: Request[]) => data.length === 0}
-      action={{ label: 'help.tpu.ru', to: '/services' }}
     >
       {(items) => (
         <ul className="rows">

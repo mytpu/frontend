@@ -5,6 +5,7 @@
 
 import { TIMETABLE } from './timetable';
 import type {
+  AgendaData,
   Deadline,
   DaySummary,
   InboxItem,
@@ -14,7 +15,6 @@ import type {
   ScheduleDay,
   Student,
   TodayData,
-  WeekData,
 } from '../types';
 
 export const STUDENT: Student = {
@@ -102,20 +102,29 @@ export function todayFixture(date = new Date()): TodayData {
   return { day: summary(date), pairs, nowPairId, minsLeft, gap };
 }
 
-/** Неделя с понедельника текущей недели. */
-export function weekFixture(date = new Date()): WeekData {
+/** Неделя с понедельника: `offset` — сдвиг в неделях от текущей (0 — эта неделя). */
+export function agendaFixture(offset = 0, date = new Date()): AgendaData {
   const monday = mondayOf(date);
+  monday.setDate(monday.getDate() + offset * 7);
   const today = summary(date).iso;
-  const days: ScheduleDay[] = Array.from({ length: 6 }, (_, offset) => {
+
+  const days: ScheduleDay[] = Array.from({ length: 7 }, (_, index) => {
     const day = new Date(monday);
-    day.setDate(monday.getDate() + offset);
+    day.setDate(monday.getDate() + index);
     return { ...summary(day), pairs: pairsFor(day), isToday: summary(day).iso === today };
   });
 
   const sunday = new Date(monday);
   sunday.setDate(monday.getDate() + 6);
+  const sameMonth = monday.getMonth() === sunday.getMonth();
 
-  return { weekLabel: `${monday.getDate()}–${sunday.getDate()} ${MONTHS[sunday.getMonth()]}`, days };
+  return {
+    weekLabel: sameMonth
+      ? `${monday.getDate()}–${sunday.getDate()} ${MONTHS[sunday.getMonth()]}`
+      : `${monday.getDate()} ${MONTHS[monday.getMonth()]} – ${sunday.getDate()} ${MONTHS[sunday.getMonth()]}`,
+    offset,
+    days,
+  };
 }
 
 export const DEADLINES: Deadline[] = [

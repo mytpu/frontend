@@ -25,7 +25,6 @@ export function InboxWidget({ size }: { size: WidgetSize }) {
       result={result}
       emptyText="Новых писем и сообщений нет"
       isEmpty={(data: InboxItem[]) => data.length === 0}
-      action={{ label: 'Все сервисы', to: '/services' }}
     >
       {(items) => (
         <ul className="rows">

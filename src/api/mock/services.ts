@@ -10,7 +10,6 @@ export const SERVICES: Service[] = [
     subtitle: 'Успеваемость, зачётка, справки',
     url: 'https://lk.tpu.ru',
     via: 'link',
-    note: 'Личный кабинет пока открывается как сайт: своей роли в шлюзе у него нет.',
   },
   {
     id: 'rasp',
@@ -18,7 +17,6 @@ export const SERVICES: Service[] = [
     subtitle: 'Пары, аудитории, преподаватели',
     url: 'https://rasp.tpu.ru',
     via: 'gateway',
-    note: 'Поиск аудитории, группы или преподавателя идёт через шлюз — инструмент rasp_find.',
   },
   {
     id: 'moodle',
@@ -26,7 +24,6 @@ export const SERVICES: Service[] = [
     subtitle: 'Курсы, задания, дедлайны',
     url: 'https://lms.tpu.ru',
     via: 'link',
-    note: 'Курсы и задания — только через сайт: доступа к LMS у шлюза ещё нет.',
   },
   {
     id: 'mail',
@@ -34,7 +31,6 @@ export const SERVICES: Service[] = [
     subtitle: 'Письма от деканата и преподавателей',
     url: 'https://mail.tpu.ru',
     via: 'link',
-    note: 'Почтовый ящик в приложении не читается — открывается веб-клиент.',
   },
   {
     id: 'help',
@@ -42,7 +38,6 @@ export const SERVICES: Service[] = [
     subtitle: 'help.tpu.ru: проблемы с сервисами',
     url: 'https://help.tpu.ru',
     via: 'link',
-    note: 'Инструкции помощник найдёт, а создание заявки появится вместе с API help.tpu.ru.',
   },
   {
     id: 'docs',
@@ -50,7 +45,6 @@ export const SERVICES: Service[] = [
     subtitle: 'devdocs.tpu.ru и справочные статьи',
     url: 'https://devdocs.tpu.ru',
     via: 'gateway',
-    note: 'Поиск по документам ТПУ с источниками идёт через шлюз — инструмент docs_search.',
   },
 ];
 

@@ -19,7 +19,6 @@ export function DeadlinesWidget({ size }: { size: WidgetSize }) {
       result={result}
       emptyText="Дедлайнов нет — все задания закрыты"
       isEmpty={(data: Deadline[]) => data.length === 0}
-      action={{ label: 'Moodle', to: '/services' }}
     >
       {(items) => (
         <ul className="rows">

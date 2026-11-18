@@ -35,8 +35,10 @@ export interface ScheduleDay extends DaySummary {
   isToday: boolean;
 }
 
-export interface WeekData {
+/** Лента расписания: семь дней подряд от понедельника выбранной недели. */
+export interface AgendaData {
   weekLabel: string;
+  offset: number;
   days: ScheduleDay[];
 }
 
@@ -104,7 +106,6 @@ export interface Service {
   subtitle: string;
   url: string;
   via: 'gateway' | 'link';
-  note: string;
 }
 
 export interface QuickAction {

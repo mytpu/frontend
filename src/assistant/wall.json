@@ -1,0 +1,8 @@
+{
+  "plates": [
+    { "base": "#e4f4ea", "fold": "#b9dfc9", "edge": 28 },
+    { "base": "#d3ecdc", "fold": "#a9d6bb", "edge": 72 },
+    { "base": "#c8e6d3", "fold": "#8cc9a5", "edge": 96 },
+    { "base": "#eef8f2", "fold": "#c8e6d3", "edge": 44 }
+  ]
+}

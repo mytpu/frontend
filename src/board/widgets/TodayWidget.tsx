@@ -24,7 +24,6 @@ export function TodayWidget({ size }: { size: WidgetSize }) {
       result={result}
       emptyText="На сегодня пар нет"
       isEmpty={(data: TodayData) => data.pairs.length === 0}
-      action={{ label: 'Вся неделя', to: '/schedule' }}
     >
       {(data) => {
         const current = data.pairs.find((pair) => pair.id === data.nowPairId) ?? null;

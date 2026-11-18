@@ -1,6 +1,7 @@
 import type { ChatMessage } from './useChat';
 import { ChatCardView } from './ChatCard';
 import { DraftCard } from './DraftCard';
+import { LatticeLoader } from '@/shared/ui/LatticeLoader';
 
 import './thread.css';
 import './cards.css';
@@ -28,11 +29,7 @@ export function ChatThread({ messages, onRetry, onDraftChange }: ChatThreadProps
               <span className="msg__author">Помощник</span>
               {message.pending && message.status ? (
                 <span className="msg__status">
-                  <span className="msg__dots" aria-hidden="true">
-                    <i />
-                    <i />
-                    <i />
-                  </span>
+                  <LatticeLoader label={message.status} />
                   {message.status}
                 </span>
               ) : null}

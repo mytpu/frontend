@@ -1,9 +1,10 @@
 import { streamChat } from './chat';
-import { DEADLINES, INBOX, MARKS, REQUESTS, STUDENT, todayFixture, weekFixture } from './mock/board';
+import { DEADLINES, INBOX, MARKS, REQUESTS, STUDENT, agendaFixture, todayFixture } from './mock/board';
 import { ACCESS_APPS, NOTIFICATIONS, QUICK_ACTIONS, SERVICES } from './mock/services';
 import type { ChatEvent } from './types';
 import type {
   AccessApp,
+  AgendaData,
   AppNotification,
   Deadline,
   InboxItem,
@@ -13,7 +14,6 @@ import type {
   Service,
   Student,
   TodayData,
-  WeekData,
 } from './types';
 
 /* Единственный шов между экранами и источниками данных.
@@ -65,8 +65,8 @@ export const api = {
     return answer(todayFixture());
   },
 
-  week(): Promise<WeekData> {
-    return answer(weekFixture());
+  agenda(offset = 0): Promise<AgendaData> {
+    return answer(agendaFixture(offset));
   },
 
   deadlines(): Promise<Deadline[]> {

@@ -8,27 +8,35 @@
 }
 
 .start {
+  position: relative;
   display: flex;
   flex-direction: column;
   align-items: flex-start;
   gap: var(--space-2);
   padding: var(--space-6);
+  overflow: hidden;
   border: 1px solid var(--line-tile);
   border-radius: var(--r-card);
   background: var(--surface);
   box-shadow: var(--shadow-1);
 }
 
+.start__wall {
+  position: absolute;
+  inset: -24px;
+  opacity: 0.4;
+  mask-image: linear-gradient(90deg, transparent 18%, #000 62%, #000);
+}
+
+.start > :not(.start__wall) {
+  position: relative;
+  z-index: 1;
+}
+
 .start__title {
   font-size: 17px;
   font-weight: 600;
   letter-spacing: -0.02em;
-}
-
-.start__text {
-  max-width: 58ch;
-  color: var(--ink-2);
-  font-size: 13px;
 }
 
 .start__chips {
@@ -119,27 +127,6 @@
   margin-left: auto;
   color: var(--ink-3);
   font-size: 12px;
-}
-
-.msg__dots {
-  display: inline-flex;
-  gap: 3px;
-}
-
-.msg__dots i {
-  width: 4px;
-  height: 4px;
-  border-radius: var(--r-pill);
-  background: var(--accent-bright);
-  animation: dots 1s var(--ease) infinite;
-}
-
-.msg__dots i:nth-child(2) {
-  animation-delay: 0.15s;
-}
-
-.msg__dots i:nth-child(3) {
-  animation-delay: 0.3s;
 }
 
 @keyframes dots {
@@ -255,17 +242,6 @@
   font-size: 11px;
   transform: translateY(100%);
   pointer-events: none;
-}
-
-.chat__foot {
-  color: var(--ink-3);
-  font-size: 11px;
-}
-
-.chat__foot code {
-  padding: 1px 5px;
-  border-radius: 5px;
-  background: var(--chip-bg);
 }
 
 @media (max-width: 720px) {

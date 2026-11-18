@@ -61,11 +61,6 @@ export function ProfilePage() {
 
       <section className="section">
         <h2 className="section__title">Приложения с доступом</h2>
-        <p className="section__note">
-          Права проверяет бэкенд, интерфейс показывает только результат проверки. Полное управление доступами
-          появится вместе с входом через ТПУ.
-        </p>
-
         {apps.state.status === 'loading' ? <Skeleton lines={3} /> : null}
         {apps.state.status === 'error' ? <ErrorBlock message={apps.state.message} onRetry={apps.reload} /> : null}
         {apps.state.status === 'ready' ? (
@@ -89,10 +84,7 @@ export function ProfilePage() {
       <section className="section">
         <h2 className="section__title">Сессия</h2>
         <div className="session">
-          <p className="session__text">
-            Вход через ТПУ пока не подключён: приложение работает на демонстрационных данных, ключи шлюза живут
-            на сервере.
-          </p>
+
           <button className="btn btn--outline" type="button" onClick={() => setExitOpen(true)}>
             <Icon name="power" size={16} />
             Выйти
@@ -136,16 +128,6 @@ function StudentCard({ student }: { student: Student }) {
         <p className="me__meta">{student.program}</p>
       </div>
 
-      <dl className="me__facts">
-        <div>
-          <dt>Почта</dt>
-          <dd>{student.email}</dd>
-        </div>
-        <div>
-          <dt>Источник</dt>
-          <dd>lk.tpu.ru, доступ ещё не подключён</dd>
-        </div>
-      </dl>
     </section>
   );
 }

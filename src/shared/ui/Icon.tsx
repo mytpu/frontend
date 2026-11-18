@@ -27,7 +27,8 @@ export type IconName =
   | 'settings'
   | 'lock'
   | 'power'
-  | 'spark';
+  | 'spark'
+  | 'grip';
 
 /* Только контурные иконки 24×24, stroke = currentColor: так они красятся токенами темы. */
 const PATHS: Record<IconName, string> = {
@@ -58,6 +59,7 @@ const PATHS: Record<IconName, string> = {
   lock: 'M6 11h12v9H6zM9 11V8a3 3 0 0 1 6 0v3',
   power: 'M12 4v7.5M7.6 6.6a7 7 0 1 0 8.8 0',
   spark: 'M12 3.5l1.8 5.2L19 10.5l-5.2 1.8L12 17.5l-1.8-5.2L5 10.5l5.2-1.8z',
+  grip: 'M9 6h.01M15 6h.01M9 12h.01M15 12h.01M9 18h.01M15 18h.01',
 };
 
 interface IconProps extends Omit<SVGProps<SVGSVGElement>, 'name'> {

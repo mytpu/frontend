@@ -6,7 +6,7 @@ import { Icon } from '@/shared/ui/Icon';
 import './PageHeader.css';
 
 interface PageHeaderProps {
-  eyebrow: string;
+  eyebrow?: string;
   title: string;
   children?: ReactNode;
 }
@@ -19,7 +19,7 @@ export function PageHeader({ eyebrow, title, children }: PageHeaderProps) {
   return (
     <header className="page-head">
       <div className="page-head__text">
-        <p className="page-head__eyebrow">{eyebrow}</p>
+        {eyebrow ? <p className="page-head__eyebrow">{eyebrow}</p> : null}
         <h1 className="page-head__title">{title}</h1>
       </div>
 
@@ -27,7 +27,7 @@ export function PageHeader({ eyebrow, title, children }: PageHeaderProps) {
         {children}
         <button className="search search--button" type="button" onClick={openPalette}>
           <Icon name="search" size={18} />
-          <span className="search__label">Поиск по сервисам</span>
+          <span className="search__label">Поиск</span>
           <kbd className="kbd">Ctrl K</kbd>
         </button>
         <button

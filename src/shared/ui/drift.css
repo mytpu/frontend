@@ -1,0 +1,54 @@
+/* DriftWall: колонки бумажных плиток, бесконечная лента на CSS. */
+
+.drift {
+  display: flex;
+  gap: var(--space-3);
+  height: 100%;
+  overflow: hidden;
+  pointer-events: none;
+  mask-image: linear-gradient(180deg, transparent, #000 18%, #000 82%, transparent);
+}
+
+.drift__col {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  gap: var(--space-3);
+  animation-name: drift-scroll;
+  animation-timing-function: linear;
+  animation-iteration-count: infinite;
+  will-change: transform;
+}
+
+.drift__tile {
+  display: block;
+  flex: none;
+  overflow: hidden;
+  aspect-ratio: 4 / 3;
+  border: 1px solid var(--line-tile);
+  border-radius: var(--r-tile);
+  background: var(--surface);
+  box-shadow: var(--shadow-1);
+}
+
+.drift__tile img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+@keyframes drift-scroll {
+  from {
+    transform: translateY(0);
+  }
+  to {
+    transform: translateY(-50%);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .drift__col {
+    animation: none;
+  }
+}

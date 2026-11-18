@@ -2,6 +2,8 @@ import { useSearchParams } from 'react-router-dom';
 
 import { PageHeader } from '@/shared/ui/PageHeader';
 import { Logo } from '@/shared/ui/Logo';
+import { DriftWall } from '@/shared/ui/DriftWall';
+import { WALL } from '@/assistant/wall';
 
 import { ChatThread } from '@/assistant/ChatThread';
 import { Composer } from '@/assistant/Composer';
@@ -44,13 +46,11 @@ export function AssistantPage() {
       <div className="chat">
         {empty ? (
           <section className="start">
+            <div className="start__wall">
+              <DriftWall items={WALL} columns={4} speed={58} />
+            </div>
             <Logo size={30} />
             <h2 className="start__title">Спросите про учёбу — ответ будет со ссылкой на источник</h2>
-            <p className="start__text">
-              Помощник ищет по документам ТПУ и расписанию через шлюз. Если данных нет, он так и скажет, а не
-              придумает.
-            </p>
-
             <div className="start__chips">
               {SCENARIOS.map((scenario) => (
                 <button
@@ -88,10 +88,6 @@ export function AssistantPage() {
 
         <Composer key={initial} sending={chat.sending} initialValue={initial} onSend={chat.send} onStop={chat.stop} />
 
-        <p className="chat__foot">
-          Поток ответа идёт в <code>/api/ai/chat/stream</code>. Ключ шлюза доклеивает сервер, в браузере его нет.
-          {chat.conversationId ? ` Диалог ${chat.conversationId.slice(0, 8)}… — контекст держит шлюз.` : ''}
-        </p>
       </div>
     </>
   );

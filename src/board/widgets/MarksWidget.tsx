@@ -18,7 +18,6 @@ export function MarksWidget({ size }: { size: WidgetSize }) {
       result={result}
       emptyText="Оценок пока нет"
       isEmpty={(data: Marks) => data.recent.length === 0}
-      action={{ label: 'Личный кабинет', to: '/services' }}
     >
       {(data) => (
         <>

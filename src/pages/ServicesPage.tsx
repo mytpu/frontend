@@ -40,18 +40,6 @@ export function ServicesPage() {
     <>
       <PageHeader eyebrow="6 сервисов · общий слой интеграций" title="Сервисы" />
 
-      <section className="banner">
-        <span className="banner__dot" aria-hidden="true" />
-        <div>
-          <p className="banner__title">Два разных пути к одному сервису</p>
-          <p className="banner__text">
-            Ссылка открывает сайт ТПУ и на этом заканчивается. Шлюз приносит данные внутрь приложения: помощник
-            вызывает инструмент и показывает ответ карточкой со ссылкой на источник. Сейчас так работают поиск по
-            документам и поиск в расписании, остальное — честные ссылки.
-          </p>
-        </div>
-      </section>
-
       {actions.state.status === 'ready' ? (
         <section className="section">
           <h2 className="section__title">Спросить помощника</h2>
@@ -86,8 +74,6 @@ export function ServicesPage() {
                     <p className="tile__subtitle">{service.subtitle}</p>
                   </span>
                 </div>
-
-                <p className="tile__note">{service.note}</p>
 
                 <div className="tile__foot">
                   <Chip tone={service.via === 'gateway' ? 'ok' : 'neutral'}>

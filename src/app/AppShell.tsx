@@ -121,12 +121,6 @@ export function AppShell() {
             ))}
           </nav>
 
-          <button className="rail__search" type="button" onClick={() => setPaletteOpen(true)}>
-            <Icon name="search" size={18} />
-            <span>Поиск</span>
-            <kbd className="kbd">Ctrl K</kbd>
-          </button>
-
           <div className="rail__spacer" />
 
           <button className="rail__theme" type="button" onClick={toggle}>
