@@ -1,6 +1,8 @@
 /* Каркас: боковая колонка на сайте, нижние вкладки на телефоне. */
 
 .shell {
+  position: relative;
+  z-index: 1;
   display: grid;
   grid-template-columns: 248px minmax(0, 1fr);
   min-height: 100%;

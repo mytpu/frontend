@@ -116,8 +116,28 @@
 }
 
 .btn--contrast {
-  background: var(--contrast);
+  position: relative;
+  isolation: isolate;
+  border-radius: 0;
+  background: none;
   color: var(--on-contrast);
+}
+
+/* срез 12 px — форма из «Оригами»; фон отдельным слоем, чтобы не резать фокус */
+.btn--contrast::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  background: var(--contrast);
+  clip-path: polygon(
+    0 0,
+    calc(100% - var(--cut)) 0,
+    100% var(--cut),
+    100% 100%,
+    var(--cut) 100%,
+    0 calc(100% - var(--cut))
+  );
 }
 
 .btn--contrast:hover {

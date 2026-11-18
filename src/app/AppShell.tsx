@@ -15,6 +15,7 @@ import { MOBILE_NAV, NAV } from './nav';
 import { ShellContext } from './shellContext';
 
 import './AppShell.css';
+import '@/design/paper.css';
 
 export function AppShell() {
   const [paletteOpen, setPaletteOpen] = useState(false);
@@ -89,6 +90,13 @@ export function AppShell() {
 
   return (
     <ShellContext.Provider value={shell}>
+      <div className="paper" aria-hidden="true">
+        <span className="paper__sheet paper__sheet--a" />
+        <span className="paper__sheet paper__sheet--b" />
+        <span className="paper__sheet paper__sheet--c" />
+        <span className="paper__sheet paper__sheet--d" />
+      </div>
+
       <div className="shell">
         <a className="skip-link" href="#main">
           Перейти к содержимому

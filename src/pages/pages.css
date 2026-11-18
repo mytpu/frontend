@@ -72,6 +72,7 @@
 }
 
 .tile {
+  position: relative;
   display: flex;
   flex-direction: column;
   gap: var(--space-3);
@@ -80,7 +81,22 @@
   border-radius: var(--r-tile);
   background: var(--surface);
   box-shadow: var(--shadow-1);
+  overflow: hidden;
   transition: border-color var(--dur-fast) var(--ease);
+}
+
+/* загнутый угол 24 px — вторая форма «Оригами» */
+.tile::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: var(--fold);
+  height: var(--fold);
+  background: linear-gradient(225deg, var(--paper-1) 0 50%, var(--paper-2) 50% 100%);
+  clip-path: polygon(0 0, 100% 0, 100% 100%);
+  filter: drop-shadow(-1px 1px 1px rgba(16, 24, 20, 0.12));
+  pointer-events: none;
 }
 
 .tile:hover {

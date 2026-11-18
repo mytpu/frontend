@@ -1,0 +1,102 @@
+/* «Оригами»: листы зелёной бумаги за содержимым. Только фон, кликов не ловит. */
+
+.paper {
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  overflow: hidden;
+  pointer-events: none;
+}
+
+.paper__sheet {
+  position: absolute;
+  display: block;
+  background: linear-gradient(155deg, var(--paper-1), var(--paper-2));
+  filter: drop-shadow(0 22px 34px var(--paper-shadow));
+  opacity: var(--paper-opacity);
+  animation: paper-drift 34s ease-in-out infinite alternate;
+  will-change: transform;
+}
+
+/* большой треугольник за шапкой */
+.paper__sheet--a {
+  top: -150px;
+  right: -110px;
+  width: 520px;
+  height: 520px;
+  clip-path: polygon(48% 0, 100% 100%, 0 100%);
+  transform: rotate(7deg);
+  animation-duration: 41s;
+}
+
+/* ромб слева от ленты */
+.paper__sheet--b {
+  top: 38%;
+  left: -150px;
+  width: 320px;
+  height: 320px;
+  clip-path: polygon(50% 0, 100% 50%, 50% 100%, 0 50%);
+  transform: rotate(-12deg);
+  animation-duration: 37s;
+  animation-delay: -9s;
+}
+
+/* загнутый угол у нижнего края */
+.paper__sheet--c {
+  bottom: -90px;
+  right: 8%;
+  width: 340px;
+  height: 280px;
+  clip-path: polygon(0 0, 100% 0, 58% 100%);
+  transform: rotate(-4deg);
+  animation-duration: 46s;
+  animation-delay: -17s;
+}
+
+/* пятиугольник посередине, самый тихий */
+.paper__sheet--d {
+  top: 14%;
+  right: 24%;
+  width: 150px;
+  height: 150px;
+  clip-path: polygon(50% 0, 100% 34%, 80% 100%, 20% 100%, 0 34%);
+  opacity: calc(var(--paper-opacity) * 0.55);
+  transform: rotate(16deg);
+  animation-duration: 29s;
+  animation-delay: -5s;
+}
+
+@keyframes paper-drift {
+  from {
+    translate: 0 0;
+  }
+  to {
+    translate: 0 -18px;
+  }
+}
+
+@media (max-width: 900px) {
+  .paper__sheet--a {
+    width: 340px;
+    height: 340px;
+    top: -110px;
+    right: -90px;
+  }
+
+  .paper__sheet--b,
+  .paper__sheet--d {
+    display: none;
+  }
+
+  .paper__sheet--c {
+    width: 220px;
+    height: 180px;
+    opacity: calc(var(--paper-opacity) * 0.8);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .paper__sheet {
+    animation: none;
+  }
+}
