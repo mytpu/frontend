@@ -47,7 +47,7 @@ export function AssistantPage() {
         {empty ? (
           <section className="start">
             <div className="start__wall">
-              <DriftWall items={WALL} columns={4} speed={58} />
+              <DriftWall items={WALL} columns={5} speed={40} />
             </div>
             <Logo size={30} />
             <h2 className="start__title">Спросите про учёбу — ответ будет со ссылкой на источник</h2>

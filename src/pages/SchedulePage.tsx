@@ -11,6 +11,8 @@ import { PageHeader } from '@/shared/ui/PageHeader';
 
 import './schedule.css';
 
+const WEEKDAY_SHORT = ['пн', 'вт', 'ср', 'чт', 'пт', 'сб', 'вс'];
+
 function minutes(value: string): number {
   const [hours, mins] = value.split(':').map(Number);
   return hours * 60 + mins;
@@ -47,6 +49,20 @@ export function SchedulePage() {
     event.preventDefault();
     const text = query.trim();
     if (text !== '') ask(`Найди в расписании ${text}`);
+  }
+
+  function jumpTo(iso: string) {
+    if (iso === '') return;
+    const [year, month, day] = iso.split('-').map(Number);
+    const target = new Date(year, month - 1, day);
+    const base = new Date();
+    const monday = (value: Date) => {
+      const date = new Date(value.getFullYear(), value.getMonth(), value.getDate());
+      date.setDate(date.getDate() - ((date.getDay() + 6) % 7));
+      return date;
+    };
+    setOffset(Math.round((monday(target).getTime() - monday(base).getTime()) / (7 * 86400000)));
+    setSelected(iso);
   }
 
   function goToday() {
@@ -91,6 +107,12 @@ export function SchedulePage() {
               >
                 <Icon name="arrow" size={16} />
               </button>
+              <input
+                className="agenda__date"
+                type="date"
+                aria-label="Перейти к неделе"
+                onChange={(event) => jumpTo(event.target.value)}
+              />
               <span className="agenda__range">{data.weekLabel}</span>
               <Chip tone="demo">демо</Chip>
             </div>
@@ -111,7 +133,7 @@ export function SchedulePage() {
           </div>
 
           <div className="agenda__days" role="tablist" aria-label="Дни недели">
-            {data.days.map((item) => (
+            {data.days.map((item, index) => (
               <button
                 key={item.iso}
                 role="tab"
@@ -122,7 +144,7 @@ export function SchedulePage() {
                 data-today={item.isToday || undefined}
                 onClick={() => setSelected(item.iso)}
               >
-                <span className="agenda__wd">{item.weekday.slice(0, 2)}</span>
+                <span className="agenda__wd">{WEEKDAY_SHORT[index]}</span>
                 <span className="agenda__num">{item.dateLabel.split(' ')[0]}</span>
                 <span className="agenda__dot" data-empty={item.pairs.length === 0 || undefined} aria-hidden="true" />
               </button>
