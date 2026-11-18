@@ -1,0 +1,6 @@
+node_modules/
+dist/
+.ref/
+.notes/
+package-lock.json
+*.min.*
