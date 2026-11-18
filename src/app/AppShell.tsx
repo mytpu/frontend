@@ -11,7 +11,7 @@ import { AskBar } from './AskBar';
 import { CommandPalette } from './CommandPalette';
 import type { PaletteItem } from './CommandPalette';
 import { NotificationsDrawer } from './NotificationsDrawer';
-import { NAV } from './nav';
+import { MOBILE_NAV, NAV } from './nav';
 import { ShellContext } from './shellContext';
 
 import './AppShell.css';
@@ -140,6 +140,20 @@ export function AppShell() {
         <main className="shell__main" id="main">
           <Outlet />
         </main>
+
+        <nav className="tabs" aria-label="Навигация на телефоне">
+          {MOBILE_NAV.map((item) => (
+            <NavLink
+              key={item.to}
+              to={item.to}
+              end={item.to === '/'}
+              className={({ isActive }) => `tab${isActive ? ' tab--active' : ''}`}
+            >
+              <Icon name={item.icon} size={22} />
+              <span>{item.label}</span>
+            </NavLink>
+          ))}
+        </nav>
 
         <AskBar />
 
