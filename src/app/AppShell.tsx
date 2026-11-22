@@ -2,6 +2,7 @@ import { useEffect, useMemo, useState } from 'react';
 import { NavLink, Outlet } from 'react-router-dom';
 
 import { api } from '@/api/client';
+import { initials, useViewer } from '@/auth/session';
 import { useAsync } from '@/shared/lib/useAsync';
 import { useTheme } from '@/shared/theme/useTheme';
 import { Icon } from '@/shared/ui/Icon';
@@ -22,7 +23,7 @@ export function AppShell() {
   const [drawerOpen, setDrawerOpen] = useState(false);
   const [readIds, setReadIds] = useState<string[]>([]);
 
-  const student = useAsync(api.student);
+  const me = useViewer();
   const notifications = useAsync(api.notifications);
   const services = useAsync(api.services);
   const actions = useAsync(api.quickActions);
@@ -86,7 +87,6 @@ export function AppShell() {
     [unread],
   );
 
-  const me = student.state.status === 'ready' ? student.state.data : null;
 
   return (
     <ShellContext.Provider value={shell}>
@@ -130,11 +130,10 @@ export function AppShell() {
 
           <NavLink className="rail__me" to="/profile">
             <span className="avatar" aria-hidden="true">
-              {me ? me.initials : '—'}
+              {initials(me.name)}
             </span>
             <span className="rail__who">
-              <span className="rail__name">{me ? me.name : 'Загрузка…'}</span>
-              <span className="rail__group">{me ? `${me.group} · студент` : ''}</span>
+              <span className="rail__name">{me.name}</span>
             </span>
           </NavLink>
         </aside>

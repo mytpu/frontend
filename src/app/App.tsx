@@ -1,5 +1,6 @@
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
 
+import { SessionGate } from '@/auth/SessionGate';
 import { AssistantPage } from '@/pages/AssistantPage';
 import { HomePage } from '@/pages/HomePage';
 import { ProfilePage } from '@/pages/ProfilePage';
@@ -10,16 +11,19 @@ import { AppShell } from './AppShell';
 
 export function App() {
   return (
-    <BrowserRouter>
-      <Routes>
-        <Route element={<AppShell />}>
-          <Route index element={<HomePage />} />
-          <Route path="assistant" element={<AssistantPage />} />`n          <Route path="schedule" element={<SchedulePage />} />
-          <Route path="services" element={<ServicesPage />} />
-          <Route path="profile" element={<ProfilePage />} />
-          <Route path="*" element={<HomePage />} />
-        </Route>
-      </Routes>
-    </BrowserRouter>
+    <SessionGate>
+      <BrowserRouter>
+        <Routes>
+          <Route element={<AppShell />}>
+            <Route index element={<HomePage />} />
+            <Route path="assistant" element={<AssistantPage />} />
+            <Route path="schedule" element={<SchedulePage />} />
+            <Route path="services" element={<ServicesPage />} />
+            <Route path="profile" element={<ProfilePage />} />
+            <Route path="*" element={<HomePage />} />
+          </Route>
+        </Routes>
+      </BrowserRouter>
+    </SessionGate>
   );
 }

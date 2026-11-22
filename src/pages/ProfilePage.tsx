@@ -1,7 +1,8 @@
 import { useState } from 'react';
 
 import { api } from '@/api/client';
-import type { AccessApp, Student } from '@/api/types';
+import type { AccessApp } from '@/api/types';
+import { initials, logout, useViewer, type Viewer } from '@/auth/session';
 import { useAsync } from '@/shared/lib/useAsync';
 import { useTheme } from '@/shared/theme/useTheme';
 import { Chip, ErrorBlock, Skeleton } from '@/shared/ui/Card';
@@ -18,20 +19,28 @@ const ACCESS_TONE: Record<AccessApp['status'], 'ok' | 'info' | 'neutral'> = {
 };
 
 export function ProfilePage() {
-  const student = useAsync(api.student);
+  const student = useViewer();
   const apps = useAsync(api.accessApps);
   const { mode, setMode } = useTheme();
   const [exitOpen, setExitOpen] = useState(false);
+  const [exitBusy, setExitBusy] = useState(false);
+  const [exitError, setExitError] = useState('');
+
+  async function confirmLogout() {
+    setExitBusy(true);
+    setExitError('');
+    try {
+      await logout();
+    } catch (error) {
+      setExitError(error instanceof Error ? error.message : 'Не удалось выйти');
+      setExitBusy(false);
+    }
+  }
 
   return (
     <>
-      <PageHeader eyebrow="Данные из личного кабинета · пока демонстрационные" title="Профиль" />
-
-      {student.state.status === 'loading' ? <Skeleton lines={4} /> : null}
-      {student.state.status === 'error' ? (
-        <ErrorBlock message={student.state.message} onRetry={student.reload} />
-      ) : null}
-      {student.state.status === 'ready' ? <StudentCard student={student.state.data} /> : null}
+      <PageHeader title="Профиль" />
+      <StudentCard student={student} />
 
       <section className="section">
         <h2 className="section__title">Тема</h2>
@@ -92,16 +101,12 @@ export function ProfilePage() {
         </div>
       </section>
 
-      <Dialog open={exitOpen} onClose={() => setExitOpen(false)} title="Выход">
-        <p className="dialog-text">
-          Выйти пока не из чего: сессии и входа через ТПУ ещё нет, а демонстрационные данные лежат в браузере.
-        </p>
-        <p className="dialog-text">
-          Когда появится identity, здесь будет обычный выход с отзывом сессии на сервере.
-        </p>
+      <Dialog open={exitOpen} onClose={() => { if (!exitBusy) setExitOpen(false); }} title="Выход">
+        <p className="dialog-text">Завершить текущую сессию?</p>
+        {exitError ? <p role="alert">{exitError}</p> : null}
         <div className="dialog-actions">
-          <button className="btn btn--contrast" type="button" onClick={() => setExitOpen(false)} autoFocus>
-            Понятно
+          <button className="btn btn--contrast" type="button" disabled={exitBusy} onClick={() => void confirmLogout()} autoFocus>
+            Выйти
           </button>
         </div>
       </Dialog>
@@ -109,23 +114,18 @@ export function ProfilePage() {
   );
 }
 
-function StudentCard({ student }: { student: Student }) {
+function StudentCard({ student }: { student: Viewer }) {
   return (
     <section className="me">
       <span className="me__avatar" aria-hidden="true">
-        {student.initials}
+        {initials(student.name)}
       </span>
 
       <div className="me__text">
         <p className="me__name">
           {student.name}
-          <Chip tone="demo">демо</Chip>
         </p>
-        <p className="me__meta">
-          {student.group} · {student.course} курс
-        </p>
-        <p className="me__meta">{student.institute}</p>
-        <p className="me__meta">{student.program}</p>
+        {student.email ? <p className="me__meta">{student.email}</p> : null}
       </div>
 
     </section>

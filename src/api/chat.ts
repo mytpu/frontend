@@ -1,4 +1,5 @@
 import { createSseReader, toChatEvent } from './sse';
+import { SESSION_EXPIRED } from '@/auth/session';
 import type { ChatEvent } from './types';
 
 /* Клиент потока помощника. Браузер обращается к своему origin, ключ шлюза доклеивает сервер
@@ -46,6 +47,7 @@ export async function streamChat(message: string, options: ChatOptions): Promise
   }
 
   if (!response.ok) {
+    if (response.status === 401) window.dispatchEvent(new Event(SESSION_EXPIRED));
     let text = '';
     try {
       text = await response.text();
@@ -58,7 +60,8 @@ export async function streamChat(message: string, options: ChatOptions): Promise
     } catch {
       body = {};
     }
-    onEvent({ type: 'error', code: 'http', message: errorFrom(body, response.status) });
+    const code = response.status === 404 && body.error === 'conversation_not_found' ? body.error : 'http';
+    onEvent({ type: 'error', code, message: errorFrom(body, response.status) });
     return;
   }
 

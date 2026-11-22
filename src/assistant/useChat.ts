@@ -98,6 +98,10 @@ export function useChat(): ChatApi {
           patch(id, (message) => ({ ...message, sources: mergeSources(message.sources, event.sources) }));
           break;
         case 'error':
+          if (event.code === 'conversation_not_found') {
+            conversationRef.current = null;
+            setConversationId(null);
+          }
           patch(id, (message) => ({ ...message, error: event.message, pending: false, status: null }));
           break;
         case 'done':

@@ -1,7 +1,7 @@
 /* Локальная заглушка помощника для показа без стенда.
  *
  * Говорит по тому же контракту, что и `services/assistant`:
- * POST /api/ai/chat/stream → SSE meta, status, card, sources, delta, error, done.
+ * POST /api/ai/chat → JSON; POST /api/ai/chat/stream → SSE.
  * Это не бэкенд и не замена ему: карточки здесь выдуманы, чтобы проверить интерфейс
  * и показать поток, когда ключа стенда нет.
  *
@@ -109,7 +109,7 @@ function pick(message, previous) {
   };
 }
 
-async function stream(req, res) {
+async function chat(req, res, streaming) {
   const chunks = [];
   for await (const chunk of req) chunks.push(chunk);
   const raw = Buffer.concat(chunks).toString('utf8');
@@ -124,6 +124,11 @@ async function stream(req, res) {
   }
 
   const message = typeof body.message === 'string' ? body.message : '';
+  if (raw.length > 64 * 1024) {
+    res.writeHead(413);
+    res.end();
+    return;
+  }
   if (message.trim() === '') {
     res.writeHead(400, { 'Content-Type': 'application/json' });
     res.end(JSON.stringify({ error: 'invalid_arguments', message: 'Пустое сообщение' }));
@@ -134,6 +139,13 @@ async function stream(req, res) {
   const previous = conversations.get(conversationId) ?? {};
   const plan = pick(message, previous);
   conversations.set(conversationId, { ...previous, ...(plan.remember ?? {}) });
+  if (!streaming) {
+    const sources = plan.kind === 'rasp' ? SOURCES_RASP : plan.kind === 'docs' ? SOURCES_DOCS : [];
+    const message = [plan.answer, ...sources.map(({ title, url }) => `${title}: ${url}`)].join('\n');
+    res.writeHead(200, { 'Content-Type': 'application/json; charset=utf-8' });
+    res.end(JSON.stringify({ message, conversationId }));
+    return;
+  }
 
   res.writeHead(200, {
     'Content-Type': 'text/event-stream; charset=utf-8',
@@ -170,8 +182,8 @@ async function stream(req, res) {
 }
 
 const server = createServer(async (req, res) => {
-  if (req.method === 'POST' && req.url === '/api/ai/chat/stream') {
-    await stream(req, res);
+  if (req.method === 'POST' && (req.url === '/api/ai/chat/stream' || req.url === '/api/ai/chat')) {
+    await chat(req, res, req.url.endsWith('/stream'));
     return;
   }
 
@@ -182,7 +194,7 @@ const server = createServer(async (req, res) => {
   }
 
   res.writeHead(404, { 'Content-Type': 'application/json' });
-  res.end(JSON.stringify({ error: 'not_found', message: 'Только POST /api/ai/chat/stream' }));
+  res.end(JSON.stringify({ error: 'not_found', message: 'Метод не найден' }));
 });
 
 server.listen(PORT, '127.0.0.1', () => {

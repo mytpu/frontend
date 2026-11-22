@@ -1,14 +1,12 @@
 import { useState } from 'react';
 
-import { api } from '@/api/client';
-import { useAsync } from '@/shared/lib/useAsync';
+import { useViewer } from '@/auth/session';
 import { Chip } from '@/shared/ui/Card';
 import { Icon } from '@/shared/ui/Icon';
 import { PageHeader } from '@/shared/ui/PageHeader';
 import { Board } from '@/board/Board';
 import { BoardConfigDialog } from '@/board/BoardConfigDialog';
 import { useBoard } from '@/board/boardStore';
-import { Skeleton } from '@/shared/ui/Card';
 
 import './HomePage.css';
 
@@ -27,15 +25,12 @@ function greeting(hour: number): string {
 export function HomePage() {
   const board = useBoard();
   const [configOpen, setConfigOpen] = useState(false);
-  const student = useAsync(api.student);
-
-  const me = student.state.status === 'ready' ? student.state.data : null;
-  const eyebrow = me ? `${DATE_LABEL} · ${me.group}` : DATE_LABEL;
+  const me = useViewer();
   const visible = board.items.filter((item) => item.visible);
 
   return (
     <>
-      <PageHeader eyebrow={eyebrow} title={me ? `${greeting(NOW.getHours())}, ${me.firstName}` : 'Мой ТПУ'}>
+      <PageHeader eyebrow={DATE_LABEL} title={`${greeting(NOW.getHours())}, ${me.name}`}>
         <Chip tone="demo">демо</Chip>
         <button className="btn btn--outline" type="button" onClick={() => setConfigOpen(true)}>
           <Icon name="settings" size={16} />
@@ -44,13 +39,7 @@ export function HomePage() {
       </PageHeader>
 
 
-      {student.state.status === 'loading' ? <Skeleton lines={3} /> : null}
-      {student.state.status === 'error' ? (
-        <p className="home__error">Данные студента не загрузились: {student.state.message}</p>
-      ) : null}
-
-      {student.state.status === 'ready' ? (
-        visible.length > 0 ? (
+      {visible.length > 0 ? (
           <Board board={board} />
         ) : (
           <section className="home__blank">
@@ -64,8 +53,7 @@ export function HomePage() {
               </button>
             </div>
           </section>
-        )
-      ) : null}
+      )}
 
       <BoardConfigDialog open={configOpen} onClose={() => setConfigOpen(false)} board={board} />
     </>
