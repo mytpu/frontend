@@ -4,7 +4,7 @@ import react from '@vitejs/plugin-react';
 import { createLogger, defineConfig, loadEnv } from 'vite';
 import type { ProxyOptions } from 'vite';
 import { protectAssistant } from './tools/protect-assistant.ts';
-import { SCHEDULE_SEARCH_ENDPOINT } from './src/api/schedule.ts';
+import { SCHEDULE_CALENDAR_ENDPOINT, SCHEDULE_SEARCH_ENDPOINT } from './src/api/schedule.ts';
 
 /* Браузер ходит в свой origin, ключ шлюза остаётся на сервере: прокси доклеивает заголовок
    из .env.local (файл с суффиксом .local в git не попадает). Значения без префикса VITE_
@@ -62,7 +62,7 @@ export default defineConfig(({ mode }) => {
         '/api/auth': { target: identity, changeOrigin: true },
         ...(target ? {
           '^/api/ai/chat(?:/stream)?$': assistantProxy(assistantChecksSession),
-          [`^${SCHEDULE_SEARCH_ENDPOINT}(?:\\?|$)`]: {
+          [`^(?:${SCHEDULE_SEARCH_ENDPOINT}|${SCHEDULE_CALENDAR_ENDPOINT})(?:\\?|$)`]: {
             ...assistantProxy(true),
             proxyTimeout: 22_000,
           },

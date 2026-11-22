@@ -1,13 +1,13 @@
 import type { Plugin, ViteDevServer } from 'vite';
 
-import { SCHEDULE_SEARCH_ENDPOINT } from '../src/api/schedule.ts';
+import { SCHEDULE_CALENDAR_ENDPOINT, SCHEDULE_SEARCH_ENDPOINT } from '../src/api/schedule.ts';
 
 /** На локальном стенде сессия проверяется до вызова прокси помощника. */
 export function protectAssistant(identity: string, origin: string, scheduleConfigured: boolean): Plugin {
   function install(server: Pick<ViteDevServer, 'middlewares'>) {
     server.middlewares.use(async (request, response, next) => {
       const path = request.url?.split('?')[0];
-      const schedule = path === SCHEDULE_SEARCH_ENDPOINT;
+      const schedule = path === SCHEDULE_SEARCH_ENDPOINT || path === SCHEDULE_CALENDAR_ENDPOINT;
       if (!schedule && path !== '/api/ai/chat' && path !== '/api/ai/chat/stream') {
         next();
         return;
