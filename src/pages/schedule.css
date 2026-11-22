@@ -105,7 +105,8 @@
 }
 
 .agenda__input {
-  width: 240px;
+  flex: 1;
+  min-width: 0;
   border: 0;
   outline: none;
   background: none;
@@ -114,6 +115,7 @@
 }
 
 .agenda__find-go {
+  flex: none;
   display: grid;
   place-items: center;
   width: 28px;
@@ -121,6 +123,27 @@
   border-radius: 8px;
   background: var(--contrast);
   color: var(--on-contrast);
+}
+
+.schedule-results {
+  display: grid;
+  gap: var(--space-2);
+  margin: var(--space-3) 0 0;
+  padding: 0;
+  list-style: none;
+}
+
+.schedule-results__item {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: var(--space-2);
+  border-top: 1px solid var(--line);
+  padding-top: var(--space-2);
+}
+
+.schedule-results__item .agenda__body {
+  flex: 1 1 12rem;
 }
 
 .agenda__days {
@@ -255,15 +278,6 @@
 }
 
 @media (max-width: 900px) {
-  .agenda__find {
-    width: 100%;
-  }
-
-  .agenda__input {
-    flex: 1;
-    width: auto;
-  }
-
   .agenda__days {
     gap: 4px;
   }

@@ -2,7 +2,9 @@ import { fileURLToPath, URL } from 'node:url';
 
 import react from '@vitejs/plugin-react';
 import { createLogger, defineConfig, loadEnv } from 'vite';
+import type { ProxyOptions } from 'vite';
 import { protectAssistant } from './tools/protect-assistant.ts';
+import { SCHEDULE_SEARCH_ENDPOINT } from './src/api/schedule.ts';
 
 /* Браузер ходит в свой origin, ключ шлюза остаётся на сервере: прокси доклеивает заголовок
    из .env.local (файл с суффиксом .local в git не попадает). Значения без префикса VITE_
@@ -21,8 +23,33 @@ export default defineConfig(({ mode }) => {
     options,
   );
 
+  function assistantProxy(checkSession: boolean): ProxyOptions {
+    return {
+      target,
+      changeOrigin: true,
+      headers: key ? { 'X-Assistant-Key': key } : {},
+      configure: (proxy) => {
+        proxy.on('proxyReq', (request, incoming) => {
+          request.removeHeader('cookie');
+          request.removeHeader('authorization');
+          request.removeHeader('x-assistant-require-session');
+          if (checkSession) {
+            request.setHeader('X-Assistant-Require-Session', '1');
+            const authorization = incoming.headers.authorization;
+            const cookies = incoming.headers.cookie?.split(';').map((value) => value.trim())
+              .filter((value) => value.startsWith('__Host-mytpu_session='));
+            if (authorization) request.setHeader('Authorization', authorization);
+            else if (cookies?.length === 1) request.setHeader('Cookie', cookies[0]);
+          }
+          if (key) request.setHeader('X-Assistant-Key', key);
+          else request.removeHeader('x-assistant-key');
+        });
+      },
+    };
+  }
+
   return {
-    plugins: [react(), protectAssistant(identity, origin)],
+    plugins: [react(), protectAssistant(identity, origin, Boolean(target))],
     customLogger: logger,
     resolve: {
       alias: {
@@ -34,29 +61,12 @@ export default defineConfig(({ mode }) => {
       proxy: {
         '/api/auth': { target: identity, changeOrigin: true },
         ...(target ? {
-            '^/api/ai/chat(?:/stream)?$': {
-              target,
-              changeOrigin: true,
-              headers: key ? { 'X-Assistant-Key': key } : {},
-              configure: (proxy) => {
-                proxy.on('proxyReq', (request, incoming) => {
-                  request.removeHeader('cookie');
-                  request.removeHeader('authorization');
-                  request.removeHeader('x-assistant-require-session');
-                  if (assistantChecksSession) {
-                    request.setHeader('X-Assistant-Require-Session', '1');
-                    const authorization = incoming.headers.authorization;
-                    const cookies = incoming.headers.cookie?.split(';').map((value) => value.trim())
-                      .filter((value) => value.startsWith('__Host-mytpu_session='));
-                    if (authorization) request.setHeader('Authorization', authorization);
-                    else if (cookies?.length === 1) request.setHeader('Cookie', cookies[0]);
-                  }
-                  if (key) request.setHeader('X-Assistant-Key', key);
-                  else request.removeHeader('x-assistant-key');
-                });
-              },
-            },
-          } : {}),
+          '^/api/ai/chat(?:/stream)?$': assistantProxy(assistantChecksSession),
+          [`^${SCHEDULE_SEARCH_ENDPOINT}(?:\\?|$)`]: {
+            ...assistantProxy(true),
+            proxyTimeout: 22_000,
+          },
+        } : {}),
       },
     },
   };

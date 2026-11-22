@@ -7,7 +7,7 @@
     "dev": "vite",
     "build": "tsc -b && vite build",
     "lint": "oxlint",
-    "test": "node tests/sse.test.ts",
+    "test": "node --test tests/sse.test.ts tests/schedule.test.ts",
     "stub": "node tools/stub-assistant.mjs",
     "preview": "vite preview"
   },

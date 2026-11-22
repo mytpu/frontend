@@ -1,6 +1,4 @@
 import { useCallback, useState } from 'react';
-import type { FormEvent } from 'react';
-import { useNavigate } from 'react-router-dom';
 
 import { api } from '@/api/client';
 import type { Pair, ScheduleDay } from '@/api/types';
@@ -8,6 +6,7 @@ import { useAsync } from '@/shared/lib/useAsync';
 import { Chip, ErrorBlock, Skeleton } from '@/shared/ui/Card';
 import { Icon } from '@/shared/ui/Icon';
 import { PageHeader } from '@/shared/ui/PageHeader';
+import { ScheduleSearch } from './ScheduleSearch';
 
 import './schedule.css';
 
@@ -28,9 +27,7 @@ function runningPair(day: ScheduleDay): string | null {
 
 export function SchedulePage() {
   const [offset, setOffset] = useState(0);
-  const [query, setQuery] = useState('');
   const [selected, setSelected] = useState('');
-  const navigate = useNavigate();
 
   const load = useCallback(() => api.agenda(offset), [offset]);
   const agenda = useAsync(load);
@@ -40,16 +37,6 @@ export function SchedulePage() {
   const day =
     data?.days.find((item) => item.iso === selected) ?? data?.days.find((item) => item.isToday) ?? data?.days[0] ?? null;
   const running = day ? runningPair(day) : null;
-
-  function ask(text: string) {
-    navigate(`/assistant?q=${encodeURIComponent(text)}`);
-  }
-
-  function submit(event: FormEvent) {
-    event.preventDefault();
-    const text = query.trim();
-    if (text !== '') ask(`Найди в расписании ${text}`);
-  }
 
   function jumpTo(iso: string) {
     if (iso === '') return;
@@ -72,12 +59,14 @@ export function SchedulePage() {
 
   return (
     <>
-      <PageHeader eyebrow="Расписание · данные демонстрационные" title="Расписание">
+      <PageHeader title="Расписание">
         <a className="btn btn--outline" href="https://rasp.tpu.ru" target="_blank" rel="noreferrer">
           rasp.tpu.ru
           <Icon name="external" size={15} />
         </a>
       </PageHeader>
+
+      <ScheduleSearch />
 
       {agenda.state.status === 'loading' ? <Skeleton lines={6} /> : null}
       {agenda.state.status === 'error' ? (
@@ -114,22 +103,8 @@ export function SchedulePage() {
                 onChange={(event) => jumpTo(event.target.value)}
               />
               <span className="agenda__range">{data.weekLabel}</span>
-              <Chip tone="demo">демо</Chip>
+              <Chip tone="demo">Демонстрационные пары</Chip>
             </div>
-
-            <form className="agenda__find" onSubmit={submit}>
-              <Icon name="search" size={16} />
-              <input
-                className="agenda__input"
-                value={query}
-                onChange={(event) => setQuery(event.target.value)}
-                placeholder="Аудитория, группа, преподаватель"
-                aria-label="Что найти в расписании"
-              />
-              <button className="agenda__find-go" type="submit" aria-label="Спросить помощника">
-                <Icon name="arrow" size={15} />
-              </button>
-            </form>
           </div>
 
           <div className="agenda__days" role="tablist" aria-label="Дни недели">
